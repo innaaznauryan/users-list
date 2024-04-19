@@ -14,3 +14,5 @@ This project is a user management application developed in React with Vite. The 
 To get started, clone the repository and in the root directory run ```npm install``` to install dependencies.  
 Then, run ```npm run dev``` to start the development server.  
 Access the application in your browser and log in using the provided credentials to explore the user management functionalities.
+
+Feel fre to explore the live demo of the project [here](https://users-list-react-vite.netlify.app/)!
