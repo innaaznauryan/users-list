@@ -1,0 +1,17 @@
+export const SIGN_IN = 'Sign In'
+export const WELCOME = 'Welcome!'
+export const NO_USERS = 'No Users'
+export const HOME = 'Home'
+export const USERS_LIST = 'Users List'
+export const CREATE_USER = 'Create User'
+export const EDIT_USER = 'Edit User'
+export const DELETE_USER = 'Delete User'
+
+export const WRONG_CREDS = 'Wrong username and / or password!'
+export const ARE_YOU_SURE = 'Are you sure you want to delete this user?'
+export const NOT_FOUND = 'Sorry! The page you are looking for is not found :('
+
+export const NAME_ERROR = 'Name should not be empty'
+export const EMAIL_ERROR = 'Email should not be empty'
+export const PHONE_ERROR = 'Phone should not be empty'
+export const AGE_ERROR = 'Age should not be empty'
