@@ -1,5 +1,14 @@
-import { deleteUser, editUser, createUser } from './usersSlice'
-import { removeUser, updateUser, addUser } from '../db/indexedDB'
+import { setUsers, deleteUser, editUser, createUser } from './usersSlice';
+import { getAllUsers, removeUser, updateUser, addUser } from '../db/indexedDB';
+
+export const getUsersThunk = () => async (dispatch) => {
+  try {
+    const data = await getAllUsers()
+    dispatch(setUsers(data))
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 export const removeUserThunk = (id) => async (dispatch) => {
   try {

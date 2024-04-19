@@ -1,5 +1,7 @@
-import { useState, lazy, startTransition } from 'react';
+import { useState, lazy, startTransition, useEffect, } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { getUsersThunk } from './redux/actions';
 import './main.css';
 const NavMenu = lazy(() => import('./components/NavMenu'));
 const Home = lazy(() => import('./components/Home'));
@@ -9,10 +11,15 @@ const NotFound = lazy(() => import('./components/NotFound'));
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.user)
+  const dispatch = useDispatch()
 
   const handleLogin = () => {
     startTransition(() => setIsLoggedIn(true))
   }
+
+  useEffect(() => {
+    dispatch(getUsersThunk())
+  }, [dispatch])
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { usersData } from '../constants/users'
+import { usersData } from '../constants/users';
 
 const DB_NAME = 'UserDataDB'
 const DB_VERSION = 1

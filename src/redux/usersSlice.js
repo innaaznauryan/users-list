@@ -1,14 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { getAllUsers } from '../db/indexedDB'
-
-const usersFromDB = await getAllUsers()
+import { createSlice } from '@reduxjs/toolkit';
 
 const usersSlice = createSlice({
     name: 'users',
     initialState: {
-        data: usersFromDB
+        data: []
     },
     reducers: {
+        setUsers(state, { payload }) {
+            state.data = payload
+        },
         createUser(state, { payload }) {
             return {
                 ...state,
@@ -29,4 +29,4 @@ const usersSlice = createSlice({
 
 export default usersSlice.reducer
 
-export const { createUser, editUser, deleteUser } = usersSlice.actions
+export const { setUsers, createUser, editUser, deleteUser } = usersSlice.actions
