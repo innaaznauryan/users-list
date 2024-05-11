@@ -47,7 +47,7 @@ const UserList = () => {
   return (
     <>
       <Typography variant='h4' component='h1'>{USERS_LIST}</Typography>
-      {data.length ? <TableContainer sx={{ padding: '20px' }}>
+      {data?.length ? <TableContainer sx={{ padding: '20px' }}>
         <Table>
           <TableHead>
             <TableRow>
@@ -77,8 +77,8 @@ const UserList = () => {
             ))}
           </TableBody>
         </Table>
-      </TableContainer> 
-      : <Typography sx={{ padding: '20px' }}>{NO_USERS}</Typography>}
+      </TableContainer>
+        : <Typography sx={{ padding: '20px' }}>{NO_USERS}</Typography>}
 
       {userToEdit && <AddOrEditForm
         open={openDialog}

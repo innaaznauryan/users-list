@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { Dialog, DialogTitle, FormControl, TextField, Button } from '@mui/material';
 import { CREATE_USER, EDIT_USER, NAME_ERROR, EMAIL_ERROR, PHONE_ERROR, AGE_ERROR } from '../constants/constants';
-import { editUserThunk, createUserThunk } from '../redux/actions';
+import { createUserThunk, editUserThunk } from '../redux/usersThunk';
 
 const AddOrEditForm = ({ open, onClose, user }) => {
     const dispatch = useDispatch()
@@ -52,40 +52,34 @@ const AddOrEditForm = ({ open, onClose, user }) => {
     }
 
     const handleBlur = (e) => {
-        setErrors({
-            ...errors,
-            [e.target.name]: !e.target.value.trim()
-        })
+        setErrors({...errors, [e.target.name]: !e.target.value.trim()})
     }
 
     const handleChange = (e) => {
-        setUser({
-            ..._user,
-            [e.target.name]: e.target.value
-        })
+        setUser({..._user, [e.target.name]: e.target.value})
     }
 
     const handleEditUser = () => {
         if (!user.id) {
             return
         }
-
-        dispatch(editUserThunk({
+        const updatedUser = {
             ..._user,
             name: _user.name.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase()),
             age: +_user.age
-        }))
+        }
+        dispatch(editUserThunk(updatedUser))
     }
 
     const handleCreateUser = () => {
-        dispatch(createUserThunk({
+        const newUser = {
             id: uuidv4(),
             ..._user,
             name: _user.name.toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase()),
             age: +_user.age
-        }))
+        }
+        dispatch(createUserThunk(newUser))
     }
-
 
     return (
         <Dialog onClose={handleClose} open={open} fullWidth>
@@ -138,6 +132,7 @@ const AddOrEditForm = ({ open, onClose, user }) => {
                         helperText={errors.age ? AGE_ERROR : ''} />
                     <div>
                         <Button
+                            type='button'
                             onClick={handleClose}
                             variant='contained'
                             sx={{ margin: '20px 5px' }}>

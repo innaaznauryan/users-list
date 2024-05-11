@@ -1,21 +1,25 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { FormControl, TextField, Button, Alert, Typography } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import { credentials } from '../constants/cred';
 import { WRONG_CREDS, SIGN_IN } from '../constants/constants';
+import { loginUser } from '../redux/logineSlice';
 import "./login.css";
 
-const Login = ({ onLogin }) => {
+const Login = () => {
 
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [alert, setAlert] = useState("")
 
+    const dispatch = useDispatch()
+
     const handleSubmit = (e) => {
         e.preventDefault()
         if (username === credentials.username && password === credentials.password) {
+            dispatch(loginUser(true))
             localStorage.setItem("user", username)
-            onLogin()
         } else {
             setAlert(WRONG_CREDS)
             setTimeout(() => {

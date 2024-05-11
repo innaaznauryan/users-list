@@ -1,13 +1,12 @@
 import { useDispatch } from 'react-redux';
 import { Dialog, DialogTitle, DialogContent, Table, TableBody, TableRow, TableCell, Button } from '@mui/material';
 import { DELETE_USER, ARE_YOU_SURE } from '../constants/constants';
-import { removeUserThunk } from '../redux/actions';
-
+import { removeUserThunk } from '../redux/usersThunk';
 
 const Confirm = ({ open, onClose, user }) => {
     const dispatch = useDispatch()
 
-    const handleDelete = async () => {
+    const handleDelete = () => {
         dispatch(removeUserThunk(user.id))
         onClose()
     }

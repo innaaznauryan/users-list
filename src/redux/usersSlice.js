@@ -3,11 +3,16 @@ import { createSlice } from '@reduxjs/toolkit';
 const usersSlice = createSlice({
     name: 'users',
     initialState: {
-        data: []
+        data: [],
+        loading: false,
+        error: null
     },
     reducers: {
-        setUsers(state, { payload }) {
-            state.data = payload
+         setUsers(state, { payload }) {
+            return {
+                ...state,
+                data: payload
+            }
         },
         createUser(state, { payload }) {
             return {
@@ -22,7 +27,10 @@ const usersSlice = createSlice({
             }
         },
         deleteUser(state, { payload }) {
-            state.data = state.data.filter(user => user.id !== payload)
+            return {
+                ...state,
+                data: state.data.filter(user => user.id !== payload)
+            }
         }
     }
 })

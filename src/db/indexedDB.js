@@ -1,6 +1,6 @@
 import { usersData } from '../constants/users';
 
-const DB_NAME = 'UserDataDB'
+const DB_NAME = 'UsersDataDB'
 const DB_VERSION = 1
 const STORE_NAME = 'users'
 
@@ -13,9 +13,7 @@ function openDB() {
 
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'id' })
-
         objectStore.createIndex('name', 'name', { unique: false })
-
         usersData.forEach(user => objectStore.add(user))
       }
     }
@@ -30,46 +28,44 @@ function openDB() {
   })
 }
 
-function withStore(type, callback) {
-  return openDB().then(db => {
-    const transaction = db.transaction(STORE_NAME, type)
-    const store = transaction.objectStore(STORE_NAME)
-
-    return callback(store)
-  })
-}
-
-async function addUser(user) {
-  return await withStore('readwrite', store => {
-    store.add(user)
-  })
-}
-
 async function getAllUsers() {
-  return await withStore('readonly', store => {
-    return new Promise((resolve, reject) => {
-      const request = store.getAll()
-      request.onsuccess = function (event) {
+  return new Promise((resolve, reject) => {
+    openDB().then(db => {
+      const transaction = db.transaction(STORE_NAME, 'readonly')
+      const store = transaction.objectStore(STORE_NAME)
+      const getRequest = store.getAll()
+      getRequest.onsuccess = function (event) {
         resolve(event.target.result)
       }
-      request.onerror = function (event) {
-        reject(event.target.error)
+      getRequest.onerror = function (event) {
+        reject(event.reject.error)
       }
-    })
+    }).catch(err => console.log(err))
   })
 }
 
-async function updateUser(user) {
-  return await withStore('readwrite', store => {
+function addUser(user) {
+  openDB().then(db => {
+    const transaction = db.transaction(STORE_NAME, 'readwrite')
+    const store = transaction.objectStore(STORE_NAME)
+    store.add(user)
+  }).catch(err => console.log(err))
+}
+
+function updateUser(user) {
+  openDB().then(db => {
+    const transaction = db.transaction(STORE_NAME, 'readwrite')
+    const store = transaction.objectStore(STORE_NAME)
     store.put(user)
-  })
+  }).catch(err => console.log(err))
 }
 
-
-async function removeUser(id) {
-  return await withStore('readwrite', store => {
+function removeUser(id) {
+  openDB().then(db => {
+    const transaction = db.transaction(STORE_NAME, 'readwrite')
+    const store = transaction.objectStore(STORE_NAME)
     store.delete(id)
-  })
+  }).catch(err => console.log(err))
 }
 
-export { addUser, getAllUsers, updateUser, removeUser }
+export { getAllUsers, addUser, updateUser, removeUser }
